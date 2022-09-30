@@ -1,3 +1,5 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import { configureStore } from '@reduxjs/toolkit'
 import logger from 'redux-logger'
 import userReducer from './slices/userSlice'
