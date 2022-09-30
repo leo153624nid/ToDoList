@@ -2,11 +2,10 @@
 /* eslint-disable import/no-unresolved */
 import { configureStore } from '@reduxjs/toolkit'
 import logger from 'redux-logger'
-import userReducer from './slices/userSlice'
-import imageReducer from './slices/imgSlice'
+import todoListReducer from './slices/todoListSlice'
 
 const store = configureStore({
-    reducer: { user: userReducer, image: imageReducer },
+    reducer: { todoList: todoListReducer },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({}).concat(logger),
 })

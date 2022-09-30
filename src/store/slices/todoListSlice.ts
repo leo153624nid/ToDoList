@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface Image {
@@ -16,21 +15,21 @@ const initialState: InitState = {
     images: [],
 }
 
-const userSlice = createSlice({
-    name: 'user',
+const todoListSlice = createSlice({
+    name: 'todoList',
     initialState,
     reducers: {
-        setUser(state, action: PayloadAction<InitState>) {
+        setTodo(state, action: PayloadAction<InitState>) {
             state.userName = action.payload.userName
             state.images = [...action.payload.images]
         },
-        removeUser(state) {
+        removeTodo(state) {
             state.userName = ''
             state.images = []
         },
     },
 })
 
-export const { setUser, removeUser } = userSlice.actions
+export const { setTodo, removeTodo } = todoListSlice.actions
 
-export default userSlice.reducer
+export default todoListSlice.reducer
