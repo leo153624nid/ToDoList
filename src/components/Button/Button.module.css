@@ -1,5 +1,5 @@
 .button {
-    min-width: 100px;
+    width: 100px;
     border-radius: 5px;
     padding: 8px 20px;
     cursor: pointer;
