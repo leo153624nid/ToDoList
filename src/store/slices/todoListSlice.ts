@@ -9,6 +9,14 @@ export interface Task {
     done: boolean
 }
 
+export const DEFAULT_TASK_ITEM: Task = {
+    id: '',
+    title: '',
+    description: '',
+    createdAt: 0,
+    done: false,
+}
+
 interface Tasks {
     tasks: Task[]
 }
