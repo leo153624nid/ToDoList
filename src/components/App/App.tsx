@@ -6,6 +6,7 @@ import React, { useEffect } from 'react'
 import DataAPI from '../../api/DataAPI'
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks'
 import { setTasks } from '../../store/slices/todoListSlice'
+import List from '../List/List'
 import Panel from '../Panel/Panel'
 import s from './App.module.css'
 
@@ -44,7 +45,9 @@ function App() {
             <section className={s.secction}>
                 <Panel />
             </section>
-            <section className={s.secction}>2</section>
+            <section className={s.secction}>
+                <List />
+            </section>
         </div>
     )
 }
