@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable no-alert */
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
@@ -31,6 +32,7 @@ function Panel() {
             setTaskItem(DEFAULT_TASK_ITEM)
         } else {
             alert('Введите название задачи!')
+            console.log('Введите название задачи!')
         }
     }
 
