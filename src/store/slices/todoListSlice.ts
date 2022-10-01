@@ -33,7 +33,7 @@ const todoListSlice = createSlice({
             state.tasks = [...action.payload.tasks]
         },
         addTask(state, action: PayloadAction<Task>) {
-            state.tasks = [...state.tasks, action.payload]
+            state.tasks.push(action.payload)
         },
         deleteTask(state, action: PayloadAction<Task>) {
             if (action.payload.id) {
