@@ -1,0 +1,25 @@
+.taskItem_container {
+    background-color: brown;
+    margin-bottom: 15px;
+    width: 100%;
+    padding: 25px 20px;
+    border-radius: 5px;
+}
+
+.taskItem_title {
+    font-size: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.taskItem_description {
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.taskItem_button_container {
+    display: flex;
+    justify-content: right;
+    gap: 5px;
+}
