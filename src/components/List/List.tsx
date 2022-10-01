@@ -13,7 +13,14 @@ function List() {
     return (
         <div className={s}>
             {tasks.map((elem) => {
-                if (elem.id === taskForEdit?.id) return <Panel key={elem.id} />
+                if (elem.id === taskForEdit?.id)
+                    return (
+                        <Panel
+                            key={elem.id}
+                            task={elem}
+                            setTaskForEdit={setTaskForEdit}
+                        />
+                    )
                 return (
                     <TaskItem
                         key={elem.id}
