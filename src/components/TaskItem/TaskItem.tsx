@@ -13,7 +13,7 @@ interface TaskItemProps {
 function TaskItem({ task }: TaskItemProps) {
     const dispatch = useAppDispatch()
 
-    const handleClick = () => {
+    const check = () => {
         dispatch(
             checkTask({
                 ...task,
@@ -39,12 +39,7 @@ function TaskItem({ task }: TaskItemProps) {
                 </div>
             </div>
             <div className={s.taskItem_button_container}>
-                <Button
-                    color="green"
-                    onClick={() => {
-                        handleClick()
-                    }}
-                >
+                <Button color="green" onClick={check}>
                     CHECK
                 </Button>
                 <Button color="orange">EDIT</Button>
