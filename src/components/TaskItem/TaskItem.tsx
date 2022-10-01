@@ -24,7 +24,6 @@ function TaskItem({ task, setTaskForEdit }: TaskItemProps) {
     }
 
     const edit = () => {
-        // todo
         setTaskForEdit(task)
     }
 
