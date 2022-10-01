@@ -36,9 +36,9 @@ const todoListSlice = createSlice({
             state.tasks.push(action.payload)
         },
         deleteTask(state, action: PayloadAction<Task>) {
-            if (action.payload.id) {
-                // del task by id
-            }
+            state.tasks = [
+                ...state.tasks.filter((elem) => elem.id !== action.payload.id),
+            ]
         },
         updateTask(state, action: PayloadAction<Task>) {
             state.tasks = [...state.tasks, action.payload]
