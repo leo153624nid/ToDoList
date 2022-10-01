@@ -5,7 +5,7 @@
 import React, { useEffect } from 'react'
 import DataAPI from '../../api/DataAPI'
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks'
-import { setTasks } from '../../store/slices/todoListSlice'
+import { DEFAULT_TASK_ITEM, setTasks } from '../../store/slices/todoListSlice'
 import List from '../List/List'
 import Panel from '../Panel/Panel'
 import s from './App.module.css'
@@ -43,7 +43,7 @@ function App() {
                 </p>
             </div>
             <section className={s.secction}>
-                <Panel />
+                <Panel task={DEFAULT_TASK_ITEM} />
             </section>
             <section className={s.secction}>
                 <List />
