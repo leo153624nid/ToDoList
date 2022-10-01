@@ -1,35 +1,45 @@
+/* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-export interface Image {
+export interface Task {
     id: number
-    url: string
+    title: string
+    description: string
+    createdAt: number
+    checked: boolean
 }
 
-interface InitState {
-    userName: string
-    images: Image[]
+interface Tasks {
+    tasks: Task[]
 }
 
-const initialState: InitState = {
-    userName: '',
-    images: [],
+const initialState: Tasks = {
+    tasks: [],
 }
 
 const todoListSlice = createSlice({
     name: 'todoList',
     initialState,
     reducers: {
-        setTodo(state, action: PayloadAction<InitState>) {
-            state.userName = action.payload.userName
-            state.images = [...action.payload.images]
+        setTasks(state, action: PayloadAction<Tasks>) {
+            state.tasks = [...action.payload.tasks]
         },
-        removeTodo(state) {
-            state.userName = ''
-            state.images = []
+        addTask(state, action: PayloadAction<Task>) {
+            state.tasks = [...state.tasks, action.payload]
+        },
+        deleteTask(state, action: PayloadAction<Task>) {
+            if (action.payload.id) {
+                // del task by id
+            }
+        },
+        updateTask(state, action: PayloadAction<Task>) {
+            state.tasks = [...state.tasks, action.payload]
+            // todo
         },
     },
 })
 
-export const { setTodo, removeTodo } = todoListSlice.actions
+export const { setTasks, addTask, deleteTask, updateTask } =
+    todoListSlice.actions
 
 export default todoListSlice.reducer
