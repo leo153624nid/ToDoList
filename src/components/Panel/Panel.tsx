@@ -1,19 +1,12 @@
+/* eslint-disable no-alert */
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 import React, { useState } from 'react'
 import { useAppDispatch } from '../../store/hooks/hooks'
-import { addTask, Task } from '../../store/slices/todoListSlice'
+import { addTask, DEFAULT_TASK_ITEM } from '../../store/slices/todoListSlice'
 import { generateId } from '../../utils/GenerateId'
 import Button from '../Button/Button'
 import s from './Panel.module.css'
-
-const DEFAULT_TASK_ITEM: Task = {
-    id: '',
-    title: '',
-    description: '',
-    createdAt: 0,
-    done: false,
-}
 
 function Panel() {
     const dispatch = useAppDispatch()
@@ -25,16 +18,20 @@ function Panel() {
     }
 
     const handleClick = (title: string, description: string) => {
-        dispatch(
-            addTask({
-                id: generateId(),
-                title,
-                description,
-                createdAt: Date.now(),
-                done: false,
-            })
-        )
-        setTaskItem(DEFAULT_TASK_ITEM)
+        if (title) {
+            dispatch(
+                addTask({
+                    id: generateId(),
+                    title,
+                    description,
+                    createdAt: Date.now(),
+                    done: false,
+                })
+            )
+            setTaskItem(DEFAULT_TASK_ITEM)
+        } else {
+            alert('Введите название задачи!')
+        }
     }
 
     return (
