@@ -40,9 +40,13 @@ const todoListSlice = createSlice({
                 ...state.tasks.filter((elem) => elem.id !== action.payload.id),
             ]
         },
-        updateTask(state, action: PayloadAction<Task>) {
-            state.tasks = [...state.tasks, action.payload]
-            // todo
+        editTask(state, action: PayloadAction<Task>) {
+            state.tasks = [
+                ...state.tasks.map((elem) => {
+                    if (elem.id === action.payload.id) return action.payload
+                    return elem
+                }),
+            ]
         },
         checkTask(state, action: PayloadAction<Task>) {
             state.tasks = [
@@ -57,7 +61,7 @@ const todoListSlice = createSlice({
     },
 })
 
-export const { setTasks, addTask, deleteTask, updateTask, checkTask } =
+export const { setTasks, addTask, deleteTask, editTask, checkTask } =
     todoListSlice.actions
 
 export default todoListSlice.reducer
