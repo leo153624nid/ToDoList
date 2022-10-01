@@ -1,23 +1,18 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 import React from 'react'
+import { Task } from '../../store/slices/todoListSlice'
 import s from './TaskItem.module.css'
 
-// interface ButtonProps extends React.ComponentPropsWithRef<'button'> {
-//     color: 'orange' | 'blue' | 'red'
-// }
+interface TaskItemProps {
+    task: Task
+}
 
-function TaskItem({ children, color, onClick, ...props }: ButtonProps) {
+function TaskItem({ task }: TaskItemProps) {
     return (
-        <button
-            className={className}
-            type="button"
-            onClick={onClick}
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...props}
-        >
-            {children}
-        </button>
+        <div className={s.taskItem_container}>
+            <div>{task.title}</div>
+        </div>
     )
 }
 
