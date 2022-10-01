@@ -1,8 +1,10 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 import React, { useState } from 'react'
-import { Task } from '../../store/slices/todoListSlice'
+import { useAppDispatch } from '../../store/hooks/hooks'
+import { addTask, Task } from '../../store/slices/todoListSlice'
 import { generateId } from '../../utils/GenerateId'
+import Button from '../Button/Button'
 import s from './Panel.module.css'
 
 const DEFAULT_TASK_ITEM: Task = {
@@ -14,11 +16,25 @@ const DEFAULT_TASK_ITEM: Task = {
 }
 
 function Panel() {
+    const dispatch = useAppDispatch()
     const [taskItem, setTaskItem] = useState(DEFAULT_TASK_ITEM)
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target
         setTaskItem({ ...taskItem, [name]: value })
+    }
+
+    const handleClick = (title: string, description: string) => {
+        dispatch(
+            addTask({
+                id: generateId(),
+                title,
+                description,
+                createdAt: Date.now(),
+                done: false,
+            })
+        )
+        setTaskItem(DEFAULT_TASK_ITEM)
     }
 
     return (
@@ -50,7 +66,14 @@ function Panel() {
                 </div>
             </div>
             <div className={s.button_container}>
-                <button type="button">ADD</button>
+                <Button
+                    color="blue"
+                    onClick={() => {
+                        handleClick(taskItem.title, taskItem.description)
+                    }}
+                >
+                    ADD
+                </Button>
             </div>
         </div>
     )
