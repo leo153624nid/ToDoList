@@ -4,7 +4,7 @@ import React from 'react'
 import s from './Button.module.css'
 
 interface ButtonProps extends React.ComponentPropsWithRef<'button'> {
-    color: 'orange' | 'blue' | 'red'
+    color: 'orange' | 'blue' | 'red' | 'green'
 }
 
 function Button({ children, color, onClick, ...props }: ButtonProps) {
