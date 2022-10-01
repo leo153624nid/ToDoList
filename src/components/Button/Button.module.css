@@ -12,7 +12,7 @@
 }
 
 .button_red:hover {
-    border: 1px solid rgba(210, 25, 25, 0.05);
+    background-color: rgba(210, 25, 25, 0.5);
 }
 
 .button_orange {
@@ -21,7 +21,7 @@
 }
 
 .button_orange:hover {
-    border: 1px solid rgba(210, 102, 25, 0.05);
+    background-color: rgba(210, 102, 25, 0.5);
 }
 
 .button_blue {
@@ -30,7 +30,7 @@
 }
 
 .button_blue:hover {
-    border: 1px solid rgba(25, 118, 210, 0.05);
+    background-color: rgba(25, 118, 210, 0.5);
 }
 
 .button_green {
@@ -39,5 +39,5 @@
 }
 
 .button_green:hover {
-    border: 1px solid rgba(31, 210, 25, 0.05);
+    background-color: rgba(31, 210, 25, 0.5);
 }
