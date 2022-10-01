@@ -1,4 +1,5 @@
 .button {
+    min-width: 100px;
     border-radius: 5px;
     padding: 8px 20px;
     cursor: pointer;
@@ -30,4 +31,13 @@
 
 .button_blue:hover {
     border: 1px solid rgba(25, 118, 210, 0.05);
+}
+
+.button_green {
+    border: 1px solid rgba(31, 210, 25, 0.5);
+    background-color: #5dc219;
+}
+
+.button_green:hover {
+    border: 1px solid rgba(31, 210, 25, 0.05);
 }
