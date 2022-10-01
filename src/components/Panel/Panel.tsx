@@ -4,21 +4,33 @@
 /* eslint-disable import/no-unresolved */
 import React, { useState } from 'react'
 import { useAppDispatch } from '../../store/hooks/hooks'
-import { addTask, DEFAULT_TASK_ITEM } from '../../store/slices/todoListSlice'
+import {
+    addTask,
+    DEFAULT_TASK_ITEM,
+    editTask,
+    Task,
+} from '../../store/slices/todoListSlice'
 import { generateId } from '../../utils/GenerateId'
 import Button from '../Button/Button'
 import s from './Panel.module.css'
 
-function Panel() {
+interface PanelProps {
+    task: Task
+    setTaskForEdit: React.Dispatch<React.SetStateAction<Task | null>>
+}
+
+function Panel({ task, setTaskForEdit }: PanelProps) {
     const dispatch = useAppDispatch()
-    const [taskItem, setTaskItem] = useState(DEFAULT_TASK_ITEM)
+    const [taskItem, setTaskItem] = useState(task)
+    // Режим панели(добавление новой задачи или редактирование)
+    const [editMode, setEditMode] = useState(task.id !== '')
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target
         setTaskItem({ ...taskItem, [name]: value })
     }
 
-    const handleClick = (title: string, description: string) => {
+    const add = (title: string, description: string) => {
         if (title) {
             dispatch(
                 addTask({
@@ -30,6 +42,24 @@ function Panel() {
                 })
             )
             setTaskItem(DEFAULT_TASK_ITEM)
+        } else {
+            alert('Введите название задачи!')
+            console.log('Введите название задачи!')
+        }
+    }
+
+    const edit = (title: string, description: string) => {
+        if (title) {
+            dispatch(
+                editTask({
+                    id: task.id,
+                    title,
+                    description,
+                    createdAt: task.createdAt,
+                    done: task.done,
+                })
+            )
+            setTaskForEdit(null)
         } else {
             alert('Введите название задачи!')
             console.log('Введите название задачи!')
@@ -66,9 +96,37 @@ function Panel() {
             </div>
             <div className={s.button_container}>
                 <Button
-                    color="blue"
+                    color="green"
+                    hidden={!editMode}
                     onClick={() => {
-                        handleClick(taskItem.title, taskItem.description)
+                        edit(taskItem.title, taskItem.description)
+                    }}
+                >
+                    OK
+                </Button>
+                <Button
+                    color="orange"
+                    hidden={!editMode}
+                    onClick={() => {
+                        ad(taskItem.title, taskItem.description)
+                    }}
+                >
+                    CANCEL
+                </Button>
+                <Button
+                    color="red"
+                    hidden={!editMode}
+                    onClick={() => {
+                        edt(taskItem.title, taskItem.description)
+                    }}
+                >
+                    DELETE
+                </Button>
+                <Button
+                    color="blue"
+                    hidden={editMode}
+                    onClick={() => {
+                        add(taskItem.title, taskItem.description)
                     }}
                 >
                     ADD
