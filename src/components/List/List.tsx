@@ -9,6 +9,7 @@ import s from './List.module.css'
 
 function List() {
     const { tasks } = useAppSelector((state) => state.todoList)
+    // локальное состояние для перехода к редактированию задачи
     const [taskForEdit, setTaskForEdit] = useState<Task | null>(null)
     return (
         <div className={s}>

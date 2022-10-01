@@ -26,11 +26,13 @@ function Panel({ task, setTaskForEdit }: PanelProps) {
     // Режим панели(добавление новой задачи или редактирование)
     const editMode = task.id !== ''
 
+    // Изменение состояния инпутов через хук, не через state
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target
         setTaskItem({ ...taskItem, [name]: value })
     }
 
+    // Добавление новой задачи
     const add = (title: string, description: string) => {
         if (title) {
             dispatch(
@@ -49,6 +51,7 @@ function Panel({ task, setTaskForEdit }: PanelProps) {
         }
     }
 
+    // Редактирование существующей задачи
     const edit = (title: string, description: string) => {
         if (title && setTaskForEdit) {
             dispatch(
@@ -67,10 +70,12 @@ function Panel({ task, setTaskForEdit }: PanelProps) {
         }
     }
 
+    // Отмена редактирование существующей задачи, возврат к исходным данным задачи
     const cancel = () => {
         if (setTaskForEdit) setTaskForEdit(null)
     }
 
+    // Удаление редактируемой задачи
     const del = () => {
         dispatch(
             deleteTask({

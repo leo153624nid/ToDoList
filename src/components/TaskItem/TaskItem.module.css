@@ -2,11 +2,25 @@
     background-color: brown;
     margin-bottom: 15px;
     width: 100%;
-    padding: 25px 20px;
+    padding: 20px;
     border-radius: 5px;
 }
 
+.taskItem_header {
+    width: 100%;
+    display: flex;
+
+    justify-content: space-between;
+}
+
+.taskItem_date {
+    width: 50%;
+    font-size: 10px;
+    text-align: right;
+}
+
 .taskItem_title {
+    width: 50%;
     font-size: 25px;
     cursor: pointer;
     font-weight: 600;

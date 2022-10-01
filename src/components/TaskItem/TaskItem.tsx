@@ -13,7 +13,9 @@ interface TaskItemProps {
 
 function TaskItem({ task, setTaskForEdit }: TaskItemProps) {
     const dispatch = useAppDispatch()
+    const date = new Date(task.createdAt)
 
+    // Изменение статуса выполнения задачи
     const check = () => {
         dispatch(
             checkTask({
@@ -23,10 +25,12 @@ function TaskItem({ task, setTaskForEdit }: TaskItemProps) {
         )
     }
 
+    // Переход на отображения панели редактирования задачи вместо карточки задачи
     const edit = () => {
         setTaskForEdit(task)
     }
 
+    // Удаление задачи
     const del = () => {
         dispatch(
             deleteTask({
@@ -37,20 +41,29 @@ function TaskItem({ task, setTaskForEdit }: TaskItemProps) {
     return (
         <div className={s.taskItem_container}>
             <div>
-                <div
-                    aria-hidden
-                    className={s.taskItem_title}
-                    style={{
-                        opacity: task.done ? 0.5 : 1,
-                        textDecoration: task.done ? 'line-through' : 'none',
-                    }}
-                >
-                    {task.title}
+                <div className={s.taskItem_header}>
+                    <div
+                        className={s.taskItem_title}
+                        style={{
+                            opacity: task.done ? 0.5 : 1,
+                            textDecoration: task.done ? 'line-through' : 'none',
+                        }}
+                    >
+                        {task.title}
+                    </div>
+
+                    <div className={s.taskItem_date}>
+                        created at {date.getDay()}.{date.getMonth()}.
+                        {date.getFullYear()} {date.getHours()}:
+                        {date.getMinutes()}
+                    </div>
                 </div>
+
                 <div aria-hidden className={s.taskItem_description}>
                     {task.description}
                 </div>
             </div>
+
             <div className={s.taskItem_button_container}>
                 <Button color="green" onClick={check}>
                     CHECK

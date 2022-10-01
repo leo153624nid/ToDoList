@@ -15,6 +15,7 @@ function Button({ children, color, onClick, ...props }: ButtonProps) {
             className={className}
             type="button"
             onClick={onClick}
+            // Возможно будут еще пропсы
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...props}
         >
