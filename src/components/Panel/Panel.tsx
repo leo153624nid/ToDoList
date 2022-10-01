@@ -7,6 +7,7 @@ import { useAppDispatch } from '../../store/hooks/hooks'
 import {
     addTask,
     DEFAULT_TASK_ITEM,
+    deleteTask,
     editTask,
     Task,
 } from '../../store/slices/todoListSlice'
@@ -16,14 +17,14 @@ import s from './Panel.module.css'
 
 interface PanelProps {
     task: Task
-    setTaskForEdit: React.Dispatch<React.SetStateAction<Task | null>>
+    setTaskForEdit?: React.Dispatch<React.SetStateAction<Task | null>>
 }
 
 function Panel({ task, setTaskForEdit }: PanelProps) {
     const dispatch = useAppDispatch()
     const [taskItem, setTaskItem] = useState(task)
     // Режим панели(добавление новой задачи или редактирование)
-    const [editMode, setEditMode] = useState(task.id !== '')
+    const editMode = task.id !== ''
 
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target
@@ -49,7 +50,7 @@ function Panel({ task, setTaskForEdit }: PanelProps) {
     }
 
     const edit = (title: string, description: string) => {
-        if (title) {
+        if (title && setTaskForEdit) {
             dispatch(
                 editTask({
                     id: task.id,
@@ -64,6 +65,18 @@ function Panel({ task, setTaskForEdit }: PanelProps) {
             alert('Введите название задачи!')
             console.log('Введите название задачи!')
         }
+    }
+
+    const cancel = () => {
+        if (setTaskForEdit) setTaskForEdit(null)
+    }
+
+    const del = () => {
+        dispatch(
+            deleteTask({
+                ...task,
+            })
+        )
     }
 
     return (
@@ -104,22 +117,10 @@ function Panel({ task, setTaskForEdit }: PanelProps) {
                 >
                     OK
                 </Button>
-                <Button
-                    color="orange"
-                    hidden={!editMode}
-                    onClick={() => {
-                        ad(taskItem.title, taskItem.description)
-                    }}
-                >
+                <Button color="orange" hidden={!editMode} onClick={cancel}>
                     CANCEL
                 </Button>
-                <Button
-                    color="red"
-                    hidden={!editMode}
-                    onClick={() => {
-                        edt(taskItem.title, taskItem.description)
-                    }}
-                >
+                <Button color="red" hidden={!editMode} onClick={del}>
                     DELETE
                 </Button>
                 <Button
@@ -134,6 +135,10 @@ function Panel({ task, setTaskForEdit }: PanelProps) {
             </div>
         </div>
     )
+}
+
+Panel.defaultProps = {
+    setTaskForEdit: undefined,
 }
 
 export default Panel
