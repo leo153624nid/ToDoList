@@ -2,11 +2,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface Task {
-    id: number
+    id: string
     title: string
     description: string
     createdAt: number
-    checked: boolean
+    done: boolean
 }
 
 interface Tasks {
