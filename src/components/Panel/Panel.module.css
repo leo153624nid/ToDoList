@@ -35,4 +35,7 @@
     width: 100%;
     text-align: right;
     margin-top: 10px;
+    display: flex;
+    justify-content: right;
+    gap: 5px;
 }
