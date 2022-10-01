@@ -2,7 +2,12 @@
 /* eslint-disable import/no-unresolved */
 import React from 'react'
 import { useAppDispatch } from '../../store/hooks/hooks'
-import { checkTask, Task } from '../../store/slices/todoListSlice'
+import {
+    checkTask,
+    deleteTask,
+    Task,
+    updateTask,
+} from '../../store/slices/todoListSlice'
 import Button from '../Button/Button'
 import s from './TaskItem.module.css'
 
@@ -18,6 +23,23 @@ function TaskItem({ task }: TaskItemProps) {
             checkTask({
                 ...task,
                 done: !task.done,
+            })
+        )
+    }
+
+    const edit = () => {
+        dispatch(
+            updateTask({
+                ...task,
+                done: !task.done,
+            })
+        )
+    }
+
+    const del = () => {
+        dispatch(
+            deleteTask({
+                ...task,
             })
         )
     }
@@ -42,8 +64,12 @@ function TaskItem({ task }: TaskItemProps) {
                 <Button color="green" onClick={check}>
                     CHECK
                 </Button>
-                <Button color="orange">EDIT</Button>
-                <Button color="red">DELETE</Button>
+                <Button color="orange" onClick={edit}>
+                    EDIT
+                </Button>
+                <Button color="red" onClick={del}>
+                    DELETE
+                </Button>
             </div>
         </div>
     )
