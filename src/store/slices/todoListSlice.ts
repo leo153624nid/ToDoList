@@ -44,10 +44,20 @@ const todoListSlice = createSlice({
             state.tasks = [...state.tasks, action.payload]
             // todo
         },
+        checkTask(state, action: PayloadAction<Task>) {
+            state.tasks = [
+                ...state.tasks.map((elem) => {
+                    if (elem.id === action.payload.id) {
+                        return { ...elem, done: action.payload.done }
+                    }
+                    return elem
+                }),
+            ]
+        },
     },
 })
 
-export const { setTasks, addTask, deleteTask, updateTask } =
+export const { setTasks, addTask, deleteTask, updateTask, checkTask } =
     todoListSlice.actions
 
 export default todoListSlice.reducer
