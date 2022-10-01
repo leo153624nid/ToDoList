@@ -2,20 +2,16 @@
 /* eslint-disable import/no-unresolved */
 import React from 'react'
 import { useAppDispatch } from '../../store/hooks/hooks'
-import {
-    checkTask,
-    deleteTask,
-    Task,
-    updateTask,
-} from '../../store/slices/todoListSlice'
+import { checkTask, deleteTask, Task } from '../../store/slices/todoListSlice'
 import Button from '../Button/Button'
 import s from './TaskItem.module.css'
 
 interface TaskItemProps {
     task: Task
+    setTaskForEdit: React.Dispatch<React.SetStateAction<Task | null>>
 }
 
-function TaskItem({ task }: TaskItemProps) {
+function TaskItem({ task, setTaskForEdit }: TaskItemProps) {
     const dispatch = useAppDispatch()
 
     const check = () => {
@@ -29,12 +25,7 @@ function TaskItem({ task }: TaskItemProps) {
 
     const edit = () => {
         // todo
-        dispatch(
-            updateTask({
-                ...task,
-                done: !task.done,
-            })
-        )
+        setTaskForEdit(task)
     }
 
     const del = () => {
