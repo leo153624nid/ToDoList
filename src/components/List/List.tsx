@@ -1,23 +1,18 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 import React from 'react'
+import { useAppSelector } from '../../store/hooks/hooks'
+import TaskItem from '../TaskItem/TaskItem'
 import s from './List.module.css'
 
-// interface ButtonProps extends React.ComponentPropsWithRef<'button'> {
-//     color: 'orange' | 'blue' | 'red'
-// }
-
-function List({ children, color, onClick, ...props }: ButtonProps) {
+function List() {
+    const { tasks } = useAppSelector((state) => state.todoList)
     return (
-        <button
-            className={className}
-            type="button"
-            onClick={onClick}
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...props}
-        >
-            {children}
-        </button>
+        <div className={s}>
+            {tasks.map((elem) => (
+                <TaskItem key={elem.id} task={elem} />
+            ))}
+        </div>
     )
 }
 
