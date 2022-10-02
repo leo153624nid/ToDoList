@@ -4,6 +4,8 @@
     margin-bottom: 15px;
     padding: 25px 20px;
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
 }
 
 .fields_container {
@@ -29,6 +31,7 @@
     padding: 10px 5px;
     border-radius: 2px;
     border: 0.5px solid black;
+    display: flex;
 }
 
 .button_container {
@@ -38,4 +41,12 @@
     display: flex;
     justify-content: right;
     gap: 5px;
+}
+
+@media (max-width: 530px) {
+    .fields_container {
+        display: block;
+        /* justify-content: flex-start;
+        align-items: flex-start; */
+    }
 }

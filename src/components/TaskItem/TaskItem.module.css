@@ -1,14 +1,16 @@
 .taskItem_container {
-    /* background-color: rgb(42, 165, 42); */
     margin-bottom: 15px;
     padding: 20px;
     border-radius: 5px;
+    /* display: flex; */
+}
+
+.taskItem_header_container {
+    /* display: flex; */
 }
 
 .taskItem_header {
-    width: 100%;
     display: flex;
-
     justify-content: space-between;
 }
 
@@ -33,4 +35,19 @@
     display: flex;
     justify-content: right;
     gap: 5px;
+}
+
+@media (max-width: 530px) {
+    .taskItem_header {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin-bottom: 10px;
+    }
+    .taskItem_container {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
 }

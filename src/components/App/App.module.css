@@ -1,6 +1,5 @@
 .page {
-    width: 800px;
-    min-width: 600px;
+    min-width: 800px;
     background: white;
     border-radius: 10px;
     padding: 20px 55px;
@@ -21,4 +20,27 @@
 }
 
 .section {
+    display: flex;
+    flex-direction: column;
 }
+
+/* Responsive */
+@media (max-width: 985px) {
+    .page {
+        padding: 20px 30px;
+        min-width: 600px;
+    }
+}
+
+@media (max-width: 710px) {
+    .page {
+        padding: 20px 10px;
+        min-width: 85vw;
+    }
+}
+
+/* @media (max-width: 530px) {
+    .page {
+        min-width: 270px;
+    }
+} */
