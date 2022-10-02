@@ -8,10 +8,26 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks'
 import { DEFAULT_TASK_ITEM, setTasks } from '../../store/slices/todoListSlice'
 import List from '../List/List'
 import Panel from '../Panel/Panel'
+import Select from '../Select/Select'
 import s from './App.module.css'
+
+export interface SortOption {
+    name: string
+    value: string
+}
 
 function App() {
     const dispatch = useAppDispatch()
+    const sortOptions: SortOption[] = [
+        {
+            name: 'title',
+            value: 'by title',
+        },
+        {
+            name: 'description',
+            value: 'by description',
+        },
+    ]
 
     // Получаем данные при загрузке страницы
     useEffect(() => {
@@ -44,6 +60,9 @@ function App() {
             </div>
             <section className={s.secction}>
                 <Panel task={DEFAULT_TASK_ITEM} />
+                <div>
+                    <Select defaultOption="sort by" options={sortOptions} />
+                </div>
             </section>
             <section className={s.secction}>
                 <List />

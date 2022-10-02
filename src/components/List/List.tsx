@@ -12,7 +12,7 @@ function List() {
     // локальное состояние для перехода к редактированию задачи
     const [taskForEdit, setTaskForEdit] = useState<Task | null>(null)
     return (
-        <div className={s}>
+        <div className={s.list_container}>
             {tasks.map((elem) => {
                 if (elem.id === taskForEdit?.id)
                     return (
