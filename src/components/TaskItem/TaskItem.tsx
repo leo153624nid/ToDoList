@@ -1,6 +1,8 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
-import React from 'react'
+import React, { useState } from 'react'
 import { useAppDispatch } from '../../store/hooks/hooks'
 import { checkTask, deleteTask, Task } from '../../store/slices/todoListSlice'
 import Button from '../Button/Button'
@@ -14,6 +16,7 @@ interface TaskItemProps {
 function TaskItem({ task, setTaskForEdit }: TaskItemProps) {
     const dispatch = useAppDispatch()
     const date = new Date(task.createdAt)
+    const [showMe, setShowMe] = useState(false)
 
     // Изменение статуса выполнения задачи
     const check = () => {
@@ -44,9 +47,12 @@ function TaskItem({ task, setTaskForEdit }: TaskItemProps) {
                 <div className={s.taskItem_header}>
                     <div
                         className={s.taskItem_title}
+                        onClick={() => setShowMe(!showMe)}
                         style={{
-                            opacity: task.done ? 0.5 : 1,
-                            textDecoration: task.done ? 'line-through' : 'none',
+                            opacity: task.done ? 0.4 : 1,
+                            textDecoration: task.done
+                                ? 'line-through'
+                                : 'underline',
                         }}
                     >
                         {task.title}
@@ -59,7 +65,11 @@ function TaskItem({ task, setTaskForEdit }: TaskItemProps) {
                     </div>
                 </div>
 
-                <div aria-hidden className={s.taskItem_description}>
+                <div
+                    aria-hidden
+                    className={s.taskItem_description}
+                    hidden={!showMe}
+                >
                     {task.description}
                 </div>
             </div>
