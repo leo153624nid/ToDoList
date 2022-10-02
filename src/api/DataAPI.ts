@@ -6,7 +6,6 @@ import { Task } from '../store/slices/todoListSlice'
 const axiosInstance = axios.create({
     baseURL:
         'https://todolist-e933e-default-rtdb.europe-west1.firebasedatabase.app/',
-    // todo
 })
 
 const DataAPI = {

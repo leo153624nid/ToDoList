@@ -37,7 +37,6 @@ function Panel({ task, setTaskForEdit }: PanelProps) {
     // и приходится находить индекс меняемой задачи в БД,
     // чтобы потом знать какую задачу менять в БД
     // const { tasks } = useAppSelector((state) => state.todoList)
-
     // const index = tasks.findIndex((elem) => elem.id === task.id)
 
     // Добавление новой задачи
