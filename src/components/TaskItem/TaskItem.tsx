@@ -1,9 +1,12 @@
+/* eslint-disable no-alert */
+/* eslint-disable no-console */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 import React, { useState } from 'react'
-import { useAppDispatch } from '../../store/hooks/hooks'
+import DataAPI from '../../api/DataAPI'
+import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks'
 import { checkTask, deleteTask, Task } from '../../store/slices/todoListSlice'
 import Button from '../Button/Button'
 import s from './TaskItem.module.css'
@@ -19,14 +22,29 @@ function TaskItem({ task, setTaskForEdit }: TaskItemProps) {
     const overdue = !(Date.now() - task.createdAt < task.time * 3600 * 1000)
     const [showMe, setShowMe] = useState(false)
 
+    // Костыль, потомучто firebase database не использует массивы
+    // и приходится находить индекс меняемой задачи в БД,
+    // чтобы потом знать какую задачу менять в БД
+    const { tasks } = useAppSelector((state) => state.todoList)
+    const index = tasks.findIndex((elem) => elem.id === task.id)
+
     // Изменение статуса выполнения задачи
-    const check = () => {
-        dispatch(
-            checkTask({
-                ...task,
-                done: !task.done,
-            })
-        )
+    const check = async () => {
+        const updatedTask = { ...task, done: !task.done }
+        try {
+            const response = await DataAPI.patchTask(updatedTask, index)
+
+            if (response.statusText === 'OK') {
+                dispatch(
+                    checkTask({
+                        ...updatedTask,
+                    })
+                )
+            }
+        } catch (error) {
+            console.log(error)
+            alert('Ошибка')
+        }
     }
 
     // Переход на отображения панели редактирования задачи вместо карточки задачи
@@ -35,12 +53,21 @@ function TaskItem({ task, setTaskForEdit }: TaskItemProps) {
     }
 
     // Удаление задачи
-    const del = () => {
-        dispatch(
-            deleteTask({
-                ...task,
-            })
-        )
+    const del = async () => {
+        try {
+            const response = await DataAPI.deleteTask(index)
+
+            if (response.statusText === 'OK') {
+                dispatch(
+                    deleteTask({
+                        ...task,
+                    })
+                )
+            }
+        } catch (error) {
+            console.log(error)
+            alert('Ошибка')
+        }
     }
     return (
         <div
