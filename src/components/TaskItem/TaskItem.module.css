@@ -5,10 +5,6 @@
     /* display: flex; */
 }
 
-.taskItem_header_container {
-    /* display: flex; */
-}
-
 .taskItem_header {
     display: flex;
     justify-content: space-between;

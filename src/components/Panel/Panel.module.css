@@ -46,7 +46,5 @@
 @media (max-width: 530px) {
     .fields_container {
         display: block;
-        /* justify-content: flex-start;
-        align-items: flex-start; */
     }
 }

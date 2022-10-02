@@ -49,7 +49,7 @@ function TaskItem({ task, setTaskForEdit }: TaskItemProps) {
                 backgroundColor: overdue ? 'rgb(165,42,42)' : 'rgb(165,157,42)',
             }}
         >
-            <div className={s.taskItem_header_container}>
+            <div>
                 <div className={s.taskItem_header}>
                     <div
                         className={s.taskItem_title}
