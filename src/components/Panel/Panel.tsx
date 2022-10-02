@@ -39,7 +39,8 @@ function Panel({ task, setTaskForEdit }: PanelProps) {
                 addTask({
                     id: generateId(),
                     title,
-                    description,
+                    description:
+                        description === '' ? 'no description' : description,
                     createdAt: Date.now(),
                     done: false,
                 })
@@ -58,7 +59,8 @@ function Panel({ task, setTaskForEdit }: PanelProps) {
                 editTask({
                     id: task.id,
                     title,
-                    description,
+                    description:
+                        description === '' ? 'no description' : description,
                     createdAt: task.createdAt,
                     done: task.done,
                 })
