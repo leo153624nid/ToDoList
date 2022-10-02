@@ -5,7 +5,11 @@
 import React, { useEffect, useState } from 'react'
 import DataAPI from '../../api/DataAPI'
 import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks'
-import { DEFAULT_TASK_ITEM, setTasks } from '../../store/slices/todoListSlice'
+import {
+    DEFAULT_TASK_ITEM,
+    setTasks,
+    Task,
+} from '../../store/slices/todoListSlice'
 import List from '../List/List'
 import Panel from '../Panel/Panel'
 import Search from '../Search/Search'
@@ -21,10 +25,10 @@ function App() {
     // Получаем данные при загрузке страницы
     useEffect(() => {
         DataAPI.getData()
-            .then((data) => {
+            .then((data: Task[]) => {
                 dispatch(
                     setTasks({
-                        tasks: [...data],
+                        tasks: [...Array.from(data)],
                     })
                 )
                 setIsFetching(false)
