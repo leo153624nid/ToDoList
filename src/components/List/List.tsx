@@ -29,6 +29,11 @@ function List({ searchQuery }: ListProps) {
 
     return (
         <div className={s.list_container}>
+            {!sortedTasks.length && (
+                <div className={s.noTasks}>
+                    <b>no tasks</b>
+                </div>
+            )}
             {sortedTasks.map((elem) => {
                 if (elem.id === taskForEdit?.id)
                     return (
