@@ -46,11 +46,11 @@ function App() {
                     You have <b>{tasks.length}</b> task(s)
                 </p>
             </div>
-            <section className={s.secction}>
+            <section className={s.section}>
                 <Panel task={DEFAULT_TASK_ITEM} />
                 <Search value={searchQuery} setSearchQuery={setSearchQuery} />
             </section>
-            <section className={s.secction}>
+            <section className={s.section}>
                 <List />
             </section>
         </div>
