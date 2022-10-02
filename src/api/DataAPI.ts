@@ -1,31 +1,29 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 import axios from 'axios'
-import { Comment } from '../store/slices/todoListSlice'
+import { Task } from '../store/slices/todoListSlice'
+// import { Comment } from '../store/slices/todoListSlice'
 
 const axiosInstance = axios.create({
-    baseURL: 'https://boiling-refuge-66454.herokuapp.com/images',
+    baseURL:
+        'https://todolist-e933e-default-rtdb.europe-west1.firebasedatabase.app/',
     // todo
 })
 
 const DataAPI = {
     // Получить данные
     getData() {
-        return axiosInstance.get(``).then((response) => response.data)
+        return axiosInstance.get(`tasks.json`).then((response) => response.data)
     },
-    // Получить данные фотографии
-    getImageData(imageId: number) {
-        return axiosInstance
-            .get(`/${imageId}`)
-            .then((response) => response.data)
+    // Добавить или Обновить данные задачи
+    patchTask(updatedTask: Task, index: number) {
+        return axiosInstance.patch(`tasks/${index}.json`, {
+            ...updatedTask,
+        })
     },
-    // Добавить комментарий к фотографии
-    postImageComment(imageId: number, comment: Comment) {
-        return axiosInstance
-            .post(`/${imageId}/comments`, {
-                comment,
-            })
-            .then((response) => response.data)
+    // Удалить задачу
+    deleteTask(index: number) {
+        return axiosInstance.delete(`tasks/${index}.json`)
     },
 }
 
