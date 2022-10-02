@@ -6,7 +6,7 @@
 /* eslint-disable import/no-unresolved */
 import React, { useState } from 'react'
 import DataAPI from '../../api/DataAPI'
-import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks'
+import { useAppDispatch } from '../../store/hooks/hooks'
 import { checkTask, deleteTask, Task } from '../../store/slices/todoListSlice'
 import Button from '../Button/Button'
 import s from './TaskItem.module.css'
@@ -25,14 +25,14 @@ function TaskItem({ task, setTaskForEdit }: TaskItemProps) {
     // Костыль, потомучто firebase database не использует массивы
     // и приходится находить индекс меняемой задачи в БД,
     // чтобы потом знать какую задачу менять в БД
-    const { tasks } = useAppSelector((state) => state.todoList)
-    const index = tasks.findIndex((elem) => elem.id === task.id)
+    // const { tasks } = useAppSelector((state) => state.todoList)
+    // const index = tasks.findIndex((elem) => elem.id === task.id)
 
     // Изменение статуса выполнения задачи
     const check = async () => {
         const updatedTask = { ...task, done: !task.done }
         try {
-            const response = await DataAPI.patchTask(updatedTask, index)
+            const response = await DataAPI.patchTask(updatedTask)
 
             if (response.statusText === 'OK') {
                 dispatch(
@@ -55,7 +55,7 @@ function TaskItem({ task, setTaskForEdit }: TaskItemProps) {
     // Удаление задачи
     const del = async () => {
         try {
-            const response = await DataAPI.deleteTask(index)
+            const response = await DataAPI.deleteTask()
 
             if (response.statusText === 'OK') {
                 dispatch(

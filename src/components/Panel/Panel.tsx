@@ -4,7 +4,7 @@
 /* eslint-disable import/no-unresolved */
 import React, { useState } from 'react'
 import DataAPI from '../../api/DataAPI'
-import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks'
+import { useAppDispatch } from '../../store/hooks/hooks'
 import {
     addTask,
     DEFAULT_TASK_ITEM,
@@ -36,13 +36,14 @@ function Panel({ task, setTaskForEdit }: PanelProps) {
     // Костыль, потомучто firebase database не использует массивы
     // и приходится находить индекс меняемой задачи в БД,
     // чтобы потом знать какую задачу менять в БД
-    const { tasks } = useAppSelector((state) => state.todoList)
+    // const { tasks } = useAppSelector((state) => state.todoList)
+
     // const index = tasks.findIndex((elem) => elem.id === task.id)
 
     // Добавление новой задачи
     const add = async (title: string, description: string, time: number) => {
         if (title) {
-            const updatedTask = {
+            const newTask = {
                 id: generateId(),
                 title,
                 description:
@@ -52,15 +53,12 @@ function Panel({ task, setTaskForEdit }: PanelProps) {
                 time,
             }
             try {
-                const response = await DataAPI.patchTask(
-                    updatedTask,
-                    tasks.length
-                )
+                const response = await DataAPI.patchTask(newTask)
 
                 if (response.statusText === 'OK') {
                     dispatch(
                         addTask({
-                            ...updatedTask,
+                            ...newTask,
                         })
                     )
                     setTaskItem(DEFAULT_TASK_ITEM)
@@ -76,20 +74,32 @@ function Panel({ task, setTaskForEdit }: PanelProps) {
     }
 
     // Редактирование существующей задачи
-    const edit = (title: string, description: string, time: number) => {
+    const edit = async (title: string, description: string, time: number) => {
         if (title && setTaskForEdit) {
-            dispatch(
-                editTask({
-                    id: task.id,
-                    title,
-                    description:
-                        description === '' ? 'no description' : description,
-                    createdAt: task.createdAt,
-                    done: task.done,
-                    time,
-                })
-            )
-            setTaskForEdit(null)
+            const updatedTask = {
+                id: task.id,
+                title,
+                description:
+                    description === '' ? 'no description' : description,
+                createdAt: task.createdAt,
+                done: task.done,
+                time,
+            }
+            try {
+                const response = await DataAPI.patchTask(updatedTask)
+
+                if (response.statusText === 'OK') {
+                    dispatch(
+                        editTask({
+                            ...updatedTask,
+                        })
+                    )
+                    setTaskForEdit(null)
+                }
+            } catch (error) {
+                console.log(error)
+                alert('Ошибка')
+            }
         } else {
             alert('Введите название задачи!')
             console.log('Введите название задачи!')
@@ -102,12 +112,21 @@ function Panel({ task, setTaskForEdit }: PanelProps) {
     }
 
     // Удаление редактируемой задачи
-    const del = () => {
-        dispatch(
-            deleteTask({
-                ...task,
-            })
-        )
+    const del = async () => {
+        try {
+            const response = await DataAPI.deleteTask()
+
+            if (response.statusText === 'OK') {
+                dispatch(
+                    deleteTask({
+                        ...task,
+                    })
+                )
+            }
+        } catch (error) {
+            console.log(error)
+            alert('Ошибка')
+        }
     }
 
     return (
