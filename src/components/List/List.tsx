@@ -15,11 +15,15 @@ function List({ searchQuery }: ListProps) {
     const { tasks } = useAppSelector((state) => state.todoList)
     let sortedTasks = []
 
+    // Проверка на наличие поискового запроса
     if (searchQuery) {
-        sortedTasks = [...tasks.filter((elem) => elem.title === searchQuery)]
+        sortedTasks = [
+            ...tasks.filter((elem) => elem.title.includes(searchQuery)),
+        ]
     } else {
         sortedTasks = [...tasks]
     }
+
     // локальное состояние для перехода к редактированию задачи
     const [taskForEdit, setTaskForEdit] = useState<Task | null>(null)
 
