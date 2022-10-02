@@ -13,15 +13,13 @@ import s from './App.module.css'
 
 function App() {
     const dispatch = useAppDispatch()
+    // Локальное стостояние загрузки данных
+    const [isFetching, setIsFetching] = useState(true)
     // Локальное состояние для инпута поиска
     const [searchQuery, setSearchQuery] = useState('')
 
     // Получаем данные при загрузке страницы
     useEffect(() => {
-        // Проверяем, сохранены ли задачи в браузере
-        // const tasksLocalStorage = localStorage.getItem('tasks')
-        //     ? (localStorage.getItem('email') as string)
-        //     : ''
         DataAPI.getData()
             .then((data) => {
                 dispatch(
@@ -29,6 +27,7 @@ function App() {
                         tasks: [...data],
                     })
                 )
+                setIsFetching(false)
             })
             .catch((error) => {
                 console.log(error)
@@ -40,19 +39,37 @@ function App() {
 
     return (
         <div className={s.page}>
-            <div className={s.title}>
-                <h2>ToDo List</h2>
-                <p>
-                    You have <b>{tasks.length}</b> task(s)
-                </p>
-            </div>
-            <section className={s.section}>
-                <Panel task={DEFAULT_TASK_ITEM} />
-                <Search value={searchQuery} setSearchQuery={setSearchQuery} />
-            </section>
-            <section className={s.section}>
-                <List searchQuery={searchQuery} />
-            </section>
+            {isFetching && (
+                <div className={s.title}>
+                    <h2>ToDo List</h2>
+                    <p>
+                        <b>...loading data</b>
+                    </p>
+                </div>
+            )}
+
+            {!isFetching && (
+                <div>
+                    <div className={s.title}>
+                        <h2>ToDo List</h2>
+                        <p>
+                            You have <b>{tasks.length}</b> task(s)
+                        </p>
+                    </div>
+
+                    <section className={s.section}>
+                        <Panel task={DEFAULT_TASK_ITEM} />
+                        <Search
+                            value={searchQuery}
+                            setSearchQuery={setSearchQuery}
+                        />
+                    </section>
+
+                    <section className={s.section}>
+                        <List searchQuery={searchQuery} />
+                    </section>
+                </div>
+            )}
         </div>
     )
 }
