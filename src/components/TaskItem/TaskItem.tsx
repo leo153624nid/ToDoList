@@ -16,6 +16,7 @@ interface TaskItemProps {
 function TaskItem({ task, setTaskForEdit }: TaskItemProps) {
     const dispatch = useAppDispatch()
     const date = new Date(task.createdAt)
+    const overdue = !(Date.now() - task.createdAt < task.time * 3600 * 1000)
     const [showMe, setShowMe] = useState(false)
 
     // Изменение статуса выполнения задачи
@@ -42,7 +43,12 @@ function TaskItem({ task, setTaskForEdit }: TaskItemProps) {
         )
     }
     return (
-        <div className={s.taskItem_container}>
+        <div
+            className={s.taskItem_container}
+            style={{
+                backgroundColor: overdue ? 'rgb(165,42,42)' : 'rgb(165,157,42)',
+            }}
+        >
             <div>
                 <div className={s.taskItem_header}>
                     <div
@@ -55,7 +61,9 @@ function TaskItem({ task, setTaskForEdit }: TaskItemProps) {
                                 : 'underline',
                         }}
                     >
-                        {task.title}
+                        {`${task.title} ${
+                            overdue === true ? '- overdue!' : ''
+                        }`}
                     </div>
 
                     <div className={s.taskItem_date}>
@@ -70,7 +78,8 @@ function TaskItem({ task, setTaskForEdit }: TaskItemProps) {
                     className={s.taskItem_description}
                     hidden={!showMe}
                 >
-                    {task.description}
+                    <p>{task.description}</p>
+                    <p>left {task.time} hour(s)</p>
                 </div>
             </div>
 

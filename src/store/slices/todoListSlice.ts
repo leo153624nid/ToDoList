@@ -7,6 +7,7 @@ export interface Task {
     description: string
     createdAt: number
     done: boolean
+    time: number
 }
 
 export const DEFAULT_TASK_ITEM: Task = {
@@ -15,6 +16,7 @@ export const DEFAULT_TASK_ITEM: Task = {
     description: '',
     createdAt: 0,
     done: false,
+    time: 0,
 }
 
 interface Tasks {

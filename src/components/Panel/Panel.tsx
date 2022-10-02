@@ -33,7 +33,7 @@ function Panel({ task, setTaskForEdit }: PanelProps) {
     }
 
     // Добавление новой задачи
-    const add = (title: string, description: string) => {
+    const add = (title: string, description: string, time: number) => {
         if (title) {
             dispatch(
                 addTask({
@@ -43,6 +43,7 @@ function Panel({ task, setTaskForEdit }: PanelProps) {
                         description === '' ? 'no description' : description,
                     createdAt: Date.now(),
                     done: false,
+                    time,
                 })
             )
             setTaskItem(DEFAULT_TASK_ITEM)
@@ -53,7 +54,7 @@ function Panel({ task, setTaskForEdit }: PanelProps) {
     }
 
     // Редактирование существующей задачи
-    const edit = (title: string, description: string) => {
+    const edit = (title: string, description: string, time: number) => {
         if (title && setTaskForEdit) {
             dispatch(
                 editTask({
@@ -63,6 +64,7 @@ function Panel({ task, setTaskForEdit }: PanelProps) {
                         description === '' ? 'no description' : description,
                     createdAt: task.createdAt,
                     done: task.done,
+                    time,
                 })
             )
             setTaskForEdit(null)
@@ -102,24 +104,42 @@ function Panel({ task, setTaskForEdit }: PanelProps) {
                     </label>
                 </div>
                 <div className={s.field_container}>
-                    <label htmlFor="description">
-                        <div>description</div>
+                    <label htmlFor="time">
+                        <div>time to do (hours)</div>
                         <input
-                            type="text"
-                            id="description"
-                            name="description"
-                            value={taskItem.description}
+                            type="number"
+                            id="time"
+                            name="time"
+                            value={taskItem.time}
                             onChange={onChange}
                         />
                     </label>
                 </div>
             </div>
+
+            <div className={s.field_container}>
+                <label htmlFor="description">
+                    <div>description</div>
+                    <input
+                        type="text"
+                        id="description"
+                        name="description"
+                        value={taskItem.description}
+                        onChange={onChange}
+                    />
+                </label>
+            </div>
+
             <div className={s.button_container}>
                 <Button
                     color="green"
                     hidden={!editMode}
                     onClick={() => {
-                        edit(taskItem.title, taskItem.description)
+                        edit(
+                            taskItem.title,
+                            taskItem.description,
+                            Math.abs(taskItem.time)
+                        )
                     }}
                 >
                     OK
@@ -134,7 +154,11 @@ function Panel({ task, setTaskForEdit }: PanelProps) {
                     color="blue"
                     hidden={editMode}
                     onClick={() => {
-                        add(taskItem.title, taskItem.description)
+                        add(
+                            taskItem.title,
+                            taskItem.description,
+                            Math.abs(taskItem.time)
+                        )
                     }}
                 >
                     ADD
