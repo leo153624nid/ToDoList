@@ -16,13 +16,13 @@ const DataAPI = {
     },
     // Добавить или Обновить данные задачи
     patchTask(updatedTask: Task) {
-        return axiosInstance.patch(`tasks/4.json`, {
+        return axiosInstance.patch(`tasks/3.json`, {
             ...updatedTask,
         })
     },
     // Удалить задачу
     deleteTask() {
-        return axiosInstance.delete(`tasks/4.json`)
+        return axiosInstance.delete(`tasks/3.json`)
     },
 }
 
