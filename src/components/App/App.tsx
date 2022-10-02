@@ -51,7 +51,7 @@ function App() {
                 <Search value={searchQuery} setSearchQuery={setSearchQuery} />
             </section>
             <section className={s.section}>
-                <List />
+                <List searchQuery={searchQuery} />
             </section>
         </div>
     )

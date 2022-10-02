@@ -7,13 +7,25 @@ import Panel from '../Panel/Panel'
 import TaskItem from '../TaskItem/TaskItem'
 import s from './List.module.css'
 
-function List() {
+interface ListProps {
+    searchQuery: string
+}
+
+function List({ searchQuery }: ListProps) {
     const { tasks } = useAppSelector((state) => state.todoList)
+    let sortedTasks = []
+
+    if (searchQuery) {
+        sortedTasks = [...tasks.filter((elem) => elem.title === searchQuery)]
+    } else {
+        sortedTasks = [...tasks]
+    }
     // локальное состояние для перехода к редактированию задачи
     const [taskForEdit, setTaskForEdit] = useState<Task | null>(null)
+
     return (
         <div className={s.list_container}>
-            {tasks.map((elem) => {
+            {sortedTasks.map((elem) => {
                 if (elem.id === taskForEdit?.id)
                     return (
                         <Panel
