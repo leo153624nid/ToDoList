@@ -6,10 +6,19 @@
 }
 
 .title {
-    font-size: 30px;
+    font-size: 25px;
     margin-bottom: 0.3em;
     text-align: center;
 }
+.title h2 {
+    margin: 0;
+}
+
+.title p {
+    font-size: 15px;
+    margin-bottom: 0;
+}
 
 .section {
+    /* */
 }
