@@ -3,7 +3,8 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 import React, { useState } from 'react'
-import { useAppDispatch } from '../../store/hooks/hooks'
+import DataAPI from '../../api/DataAPI'
+import { useAppDispatch, useAppSelector } from '../../store/hooks/hooks'
 import {
     addTask,
     DEFAULT_TASK_ITEM,
@@ -32,21 +33,42 @@ function Panel({ task, setTaskForEdit }: PanelProps) {
         setTaskItem({ ...taskItem, [name]: value })
     }
 
+    // Костыль, потомучто firebase database не использует массивы
+    // и приходится находить индекс меняемой задачи в БД,
+    // чтобы потом знать какую задачу менять в БД
+    const { tasks } = useAppSelector((state) => state.todoList)
+    // const index = tasks.findIndex((elem) => elem.id === task.id)
+
     // Добавление новой задачи
-    const add = (title: string, description: string, time: number) => {
+    const add = async (title: string, description: string, time: number) => {
         if (title) {
-            dispatch(
-                addTask({
-                    id: generateId(),
-                    title,
-                    description:
-                        description === '' ? 'no description' : description,
-                    createdAt: Date.now(),
-                    done: false,
-                    time,
-                })
-            )
-            setTaskItem(DEFAULT_TASK_ITEM)
+            const updatedTask = {
+                id: generateId(),
+                title,
+                description:
+                    description === '' ? 'no description' : description,
+                createdAt: Date.now(),
+                done: false,
+                time,
+            }
+            try {
+                const response = await DataAPI.patchTask(
+                    updatedTask,
+                    tasks.length
+                )
+
+                if (response.statusText === 'OK') {
+                    dispatch(
+                        addTask({
+                            ...updatedTask,
+                        })
+                    )
+                    setTaskItem(DEFAULT_TASK_ITEM)
+                }
+            } catch (error) {
+                console.log(error)
+                alert('Ошибка')
+            }
         } else {
             alert('Введите название задачи!')
             console.log('Введите название задачи!')
