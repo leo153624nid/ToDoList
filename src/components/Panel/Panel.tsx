@@ -26,7 +26,7 @@ function Panel({ task, setTaskForEdit }: PanelProps) {
     // Режим панели(добавление новой задачи или редактирование)
     const editMode = task.id !== ''
 
-    // Изменение состояния инпутов через хук, не через state
+    // Изменение состояния инпутов через хук, не через store
     const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target
         setTaskItem({ ...taskItem, [name]: value })
